@@ -67,7 +67,6 @@ namespace VerySimpleInterpreter.Parser
         public void Input() // in     : INPUT VAR
         {
             Match(ETokenType.INPUT);
-            Match(ETokenType.VAR);
         }
 
         public void Output() // out    : OUTPUT VAR

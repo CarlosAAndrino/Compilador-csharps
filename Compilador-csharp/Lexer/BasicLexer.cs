@@ -87,7 +87,7 @@ namespace VerySimpleInterpreter.Lexer
 
                     }
                 }
-                return new Token(ETokenType.VAR);
+                return new Token(ETokenType.INPUT);
             }
 
             if (_peek == 'w')  //'write'
