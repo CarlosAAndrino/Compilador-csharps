@@ -144,7 +144,9 @@ namespace VerySimpleInterpreter.Parser
         public Double Fact() //fact   : NUM | VAR | OE expr CE
         {
             if (_lookAhead.Type == ETokenType.NUM){
+                // Console.WriteLine(_lookAhead.Value);
                 Double num = Convert.ToDouble(_lookAhead.Value);
+                Console.WriteLine(num);
                 Match(ETokenType.NUM);
                 return num;
             }
