@@ -1,6 +1,2 @@
-read $x
-read $x
-$y = 3
-$z = 2
-$w = 5+2
-write $w
+read $s
+write $s

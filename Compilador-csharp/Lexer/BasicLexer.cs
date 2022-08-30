@@ -3,16 +3,16 @@ namespace VerySimpleInterpreter.Lexer
     public class BasicLexer
     {
 
-        public Int32 Line { get; protected set; }
-        public Int32 Column { get; protected set; }
+        public Int32 Line{get;protected set;}
+        public Int32 Column{get;protected set;}
 
-        public string Filename { get; protected set; }
-        public SymbolTable SymbolTable { get; protected set; }
-
+        public string Filename {get; protected set;}
+        public SymbolTable SymbolTable {get; protected set;}
+        
         private char? _peek;
-        private StreamReader _reader;
+        private StreamReader _reader;            
 
-        public BasicLexer(string filename, SymbolTable? st = null)
+        public BasicLexer(string filename, SymbolTable? st = null) 
         {
             Filename = filename;
             if (st == null)
@@ -27,13 +27,13 @@ namespace VerySimpleInterpreter.Lexer
             if (_reader.EndOfStream)
                 return new Token(ETokenType.EOF);
 
-            while (_peek == null || _peek == ' ' || _peek == '\t' || _peek == '\r')
+            while (_peek == null || _peek== ' ' ||  _peek== '\t' || _peek== '\r')
             {
                 _peek = NextChar();
             }
-
-
-            switch (_peek)
+            
+            
+            switch (_peek) 
             {
                 case '+': _peek = null; return new Token(ETokenType.SUM);
                 case '-': _peek = null; return new Token(ETokenType.SUB);
@@ -43,21 +43,20 @@ namespace VerySimpleInterpreter.Lexer
                 case ')': _peek = null; return new Token(ETokenType.CE);
                 case '=': _peek = null; return new Token(ETokenType.AT);
                 case '\n':
-                    _peek = null;
+                    _peek = null; 
                     Column = 1;
                     Line++;
-                    return new Token(ETokenType.EOL);
+                    return new Token(ETokenType.EOL);                
 
             }
 
             if (_peek == '$')  //$[a-z]+
             {
-                var varName = "";
-                do
-                {
+                var varName = "";                
+                do {
                     _peek = NextChar();
                     if (Char.IsLetter(_peek.Value))
-                        varName += _peek;
+                        varName += _peek;      
                 } while (Char.IsLetter(_peek.Value));
                 var key = SymbolTable.Put(varName);
                 return new Token(ETokenType.VAR, key);
@@ -66,6 +65,7 @@ namespace VerySimpleInterpreter.Lexer
             if (_peek == 'r')  //'read'
             {
                 if (testSufix("ead"))
+
                     return new Token(ETokenType.INPUT);
             }
 
@@ -76,18 +76,16 @@ namespace VerySimpleInterpreter.Lexer
             }
             if (Char.IsDigit(_peek.Value))  //[0-9]+
             {
-                var value = "";
-                do
-                {   
-                    
-                    value += _peek;
+                var value = 0;                
+                do {
+                    value = 10 * value + (int)Char.GetNumericValue(_peek.Value);
                     _peek = NextChar();
-
+                    
                 } while (Char.IsDigit(_peek.Value));
-                Console.WriteLine(value);
-                return new Token(ETokenType.NUM, int.Parse(value));
-            }
 
+                return new Token(ETokenType.NUM, value);
+            }        
+            
             return new Token(ETokenType.ERR);
         }
 
@@ -96,18 +94,15 @@ namespace VerySimpleInterpreter.Lexer
             Column++;
             Char c = '\0';
             if (!_reader.EndOfStream)
-                c = (Char)_reader.Read();
+                c = (Char) _reader.Read();
             return c;
         }
 
-        private bool testSufix(String suffix)
-        {
+        private bool testSufix(String suffix){
             var res = true;
-            suffix.ToCharArray().ToList().ForEach(c =>
-            {
+            suffix.ToCharArray().ToList().ForEach(c => {
                 _peek = NextChar();
-                if (_peek != c)
-                {
+                if (_peek != c){
                     res = false;
                     return;
                 }
@@ -116,8 +111,7 @@ namespace VerySimpleInterpreter.Lexer
             return res;
         }
 
-        private int GetValue(Char? c)
-        {
+        private int GetValue(Char? c){
             if (c == '0') return 0;
             if (c == '1') return 1;
             if (c == '2') return 2;

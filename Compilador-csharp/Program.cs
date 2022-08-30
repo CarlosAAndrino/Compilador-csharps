@@ -15,4 +15,4 @@ basicParser.Prog();
 // } while (t.Type != ETokenType.EOF);
 
 
-//Console.WriteLine(st);
+Console.WriteLine(st);

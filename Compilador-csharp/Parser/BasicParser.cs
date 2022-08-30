@@ -73,6 +73,7 @@ namespace VerySimpleInterpreter.Parser
         public void Output() // out    : OUTPUT VAR
         {
             Match(ETokenType.OUTPUT);
+            Console.WriteLine(_symbolTable.Get(_lookAhead.Value.Value));
             Match(ETokenType.VAR);
         }
 
@@ -144,9 +145,7 @@ namespace VerySimpleInterpreter.Parser
         public Double Fact() //fact   : NUM | VAR | OE expr CE
         {
             if (_lookAhead.Type == ETokenType.NUM){
-                // Console.WriteLine(_lookAhead.Value);
                 Double num = Convert.ToDouble(_lookAhead.Value);
-                Console.WriteLine(num);
                 Match(ETokenType.NUM);
                 return num;
             }
