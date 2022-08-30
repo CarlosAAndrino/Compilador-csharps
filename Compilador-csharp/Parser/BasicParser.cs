@@ -73,7 +73,7 @@ namespace VerySimpleInterpreter.Parser
         public void Output() // out    : OUTPUT VAR
         {
             Match(ETokenType.OUTPUT);
-            Console.WriteLine(_symbolTable.Get(_lookAhead.Value.Value));
+            Console.WriteLine("O resultado da variavel é " + _symbolTable.Get(_lookAhead.Value.Value));
             Match(ETokenType.VAR);
         }
 
@@ -136,6 +136,10 @@ namespace VerySimpleInterpreter.Parser
                 var right = Term();
                 return left / right;
             }
+             else if (_lookAhead.Type == ETokenType.SUM || _lookAhead.Type == ETokenType.SUB)
+            {
+                return left;
+            }    
             else if (!TestFollow(ETokenType.CE, ETokenType.EOL))
             {
                 Error("Found "+ _lookAhead.Type.ToString() +" Expected CE or EOL");

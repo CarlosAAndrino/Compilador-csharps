@@ -14,5 +14,6 @@ basicParser.Prog();
 //     Console.WriteLine($"<{t.Type},{t.Value}>");
 // } while (t.Type != ETokenType.EOF);
 
-
+Console.WriteLine("______________________________");
 Console.WriteLine(st);
+Console.WriteLine("______________________________");
